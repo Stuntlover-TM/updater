@@ -2,8 +2,11 @@ import requests
 import os
 
 def safe_open_w(path):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    return open(path, 'wb')
+    if "/" in path:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        return open(path, 'wb')
+    else:
+        return open(path, "wb")
 
 def download(file_name_or_path, file_url):
     with safe_open_w(file_name_or_path) as download_file:
